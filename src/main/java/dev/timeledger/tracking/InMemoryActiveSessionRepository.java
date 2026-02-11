@@ -20,7 +20,4 @@ final class InMemoryActiveSessionRepository implements ActiveSessionRepository {
         this.active = null;
     }
 
-    void setActive(ActiveSession session) {
-        this.active = session;
-    }
 }
