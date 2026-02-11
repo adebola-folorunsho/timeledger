@@ -1,8 +1,11 @@
-package dev.timeledger.tracking;
+package dev.timeledger.tracking.infra.memory;
+
+import dev.timeledger.tracking.model.ActiveSession;
+import dev.timeledger.tracking.port.ActiveSessionRepository;
 
 import java.util.Optional;
 
-final class InMemoryActiveSessionRepository implements ActiveSessionRepository {
+public final class InMemoryActiveSessionRepository implements ActiveSessionRepository {
     private ActiveSession active;
 
     @Override

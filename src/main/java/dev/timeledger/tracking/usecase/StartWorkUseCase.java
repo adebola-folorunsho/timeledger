@@ -1,4 +1,10 @@
-package dev.timeledger.tracking;
+package dev.timeledger.tracking.usecase;
+
+import dev.timeledger.tracking.exception.ActiveSessionAlreadyRunningException;
+import dev.timeledger.tracking.model.ActiveSession;
+import dev.timeledger.tracking.port.ActiveSessionRepository;
+import dev.timeledger.tracking.port.Clock;
+
 
 import java.util.Objects;
 
@@ -11,7 +17,7 @@ final class StartWorkUseCase {
         this.activeSessions = Objects.requireNonNull(activeSessions, "activeSessions");
     }
 
-    void start(String projectName) {
+    public void start(String projectName) {
         if (activeSessions.findActive().isPresent()) {
             throw new ActiveSessionAlreadyRunningException("Another project is already running");
         }

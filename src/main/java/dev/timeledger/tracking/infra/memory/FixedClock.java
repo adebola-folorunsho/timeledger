@@ -1,12 +1,14 @@
-package dev.timeledger.tracking;
+package dev.timeledger.tracking.infra.memory;
+
+import dev.timeledger.tracking.port.Clock;
 
 import java.time.Instant;
 import java.util.Objects;
 
-final class FixedClock implements Clock {
+public final class FixedClock implements Clock {
     private final Instant fixedNow;
 
-    FixedClock(Instant fixedNow) {
+    public FixedClock(Instant fixedNow) {
         this.fixedNow = Objects.requireNonNull(fixedNow, "fixedNow");
     }
 

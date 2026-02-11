@@ -1,5 +1,10 @@
-package dev.timeledger.tracking;
+package dev.timeledger.tracking.usecase;
 
+import dev.timeledger.tracking.exception.NoActiveSessionException;
+import dev.timeledger.tracking.infra.memory.FixedClock;
+import dev.timeledger.tracking.infra.memory.InMemoryActiveSessionRepository;
+import dev.timeledger.tracking.infra.memory.InMemoryTimeEntryRepository;
+import dev.timeledger.tracking.model.ActiveSession;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;

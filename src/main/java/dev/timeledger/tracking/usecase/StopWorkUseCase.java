@@ -1,4 +1,11 @@
-package dev.timeledger.tracking;
+package dev.timeledger.tracking.usecase;
+
+import dev.timeledger.tracking.exception.NoActiveSessionException;
+import dev.timeledger.tracking.model.TimeEntry;
+import dev.timeledger.tracking.port.ActiveSessionRepository;
+import dev.timeledger.tracking.port.Clock;
+import dev.timeledger.tracking.port.TimeEntryRepository;
+
 
 import java.util.Objects;
 
@@ -13,7 +20,7 @@ final class StopWorkUseCase {
         this.timeEntries = Objects.requireNonNull(timeEntries, "timeEntries");
     }
 
-    void stop() {
+    public void stop() {
         var active = activeSessions.findActive()
                 .orElseThrow(() -> new NoActiveSessionException("No active session to stop"));
 

@@ -1,8 +1,10 @@
-package dev.timeledger.tracking;
+package dev.timeledger.tracking.port;
+
+import dev.timeledger.tracking.model.ActiveSession;
 
 import java.util.Optional;
 
-interface ActiveSessionRepository {
+public interface ActiveSessionRepository {
     Optional<ActiveSession> findActive();
     void saveActive(ActiveSession session);
     void clearActive();
