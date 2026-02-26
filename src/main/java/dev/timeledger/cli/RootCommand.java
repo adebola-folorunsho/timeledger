@@ -6,7 +6,7 @@ import picocli.CommandLine.Command;
         name = "timeledger",
         mixinStandardHelpOptions = true,
         description = "Track freelance work sessions and generate reports.",
-        subcommands = { StatusCommand.class }
+        subcommands = { StatusCommand.class, StartCommand.class }
 )
 public final class RootCommand implements Runnable {
 

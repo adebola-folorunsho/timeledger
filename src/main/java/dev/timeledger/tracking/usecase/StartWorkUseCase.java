@@ -8,11 +8,11 @@ import dev.timeledger.tracking.port.Clock;
 
 import java.util.Objects;
 
-final class StartWorkUseCase {
+public final class StartWorkUseCase {
     private final Clock clock;
     private final ActiveSessionRepository activeSessions;
 
-    StartWorkUseCase(Clock clock, ActiveSessionRepository activeSessions) {
+    public StartWorkUseCase(Clock clock, ActiveSessionRepository activeSessions) {
         this.clock = Objects.requireNonNull(clock, "clock");
         this.activeSessions = Objects.requireNonNull(activeSessions, "activeSessions");
     }

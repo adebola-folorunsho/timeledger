@@ -1,6 +1,7 @@
 package dev.timeledger.cli;
 
 import dev.timeledger.tracking.usecase.GetStatusUseCase;
+import dev.timeledger.tracking.usecase.StartWorkUseCase;
 
 import java.io.PrintWriter;
 import java.util.Objects;
@@ -20,5 +21,9 @@ final class CommandContext {
 
     GetStatusUseCase statusUseCase() {
         return wiring.statusUseCase();
+    }
+
+    public StartWorkUseCase startUseCase() {
+        return wiring.startUseCase();
     }
 }
