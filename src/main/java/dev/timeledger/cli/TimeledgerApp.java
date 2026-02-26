@@ -38,6 +38,7 @@ public final class TimeledgerApp {
         injectStatus(cmd, ctx);
         injectStart(cmd, ctx);
         injectStop(cmd, ctx);
+        injectReport(cmd, ctx);
     }
 
     private static void injectStatus(CommandLine cmd, CommandContext ctx) {
@@ -58,6 +59,13 @@ public final class TimeledgerApp {
         var stop = cmd.getSubcommands().get("stop").getCommand();
         if (stop instanceof StopCommand sc) {
             sc.setContext(ctx);
+        }
+    }
+
+    private static void injectReport(CommandLine cmd, CommandContext ctx) {
+        var report = cmd.getSubcommands().get("report").getCommand();
+        if (report instanceof ReportCommand rc) {
+            rc.setContext(ctx);
         }
     }
 

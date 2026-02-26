@@ -6,6 +6,7 @@ import dev.timeledger.tracking.infra.system.SystemClock;
 import dev.timeledger.tracking.usecase.StartWorkUseCase;
 import dev.timeledger.tracking.infra.memory.InMemoryTimeEntryRepository;
 import dev.timeledger.tracking.usecase.StopWorkUseCase;
+import dev.timeledger.tracking.usecase.ReportTimeUseCase;
 
 final class AppWiring {
     private final InMemoryActiveSessionRepository activeSessions = new InMemoryActiveSessionRepository();
@@ -22,5 +23,9 @@ final class AppWiring {
 
     public StopWorkUseCase stopUseCase() {
         return new StopWorkUseCase(clock, activeSessions, timeEntries);
+    }
+
+    public ReportTimeUseCase reportUseCase() {
+        return new ReportTimeUseCase(timeEntries);
     }
 }
