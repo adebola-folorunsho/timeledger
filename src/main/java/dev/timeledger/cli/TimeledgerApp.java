@@ -16,15 +16,45 @@ public final class TimeledgerApp {
     }
 
     static RunResult run(String... args) {
-        var out = new StringWriter();
-        var err = new StringWriter();
-
-        var cmd = new CommandLine(new RootCommand())
-                .setOut(new PrintWriter(out))
-                .setErr(new PrintWriter(err));
-
+        var buffers = OutputBuffers.create();
+        var cmd = buildCommandLine(buffers.outWriter(), buffers.errWriter());
         int exitCode = cmd.execute(args);
-        return new RunResult(exitCode, out.toString() + err.toString());
+        return new RunResult(exitCode, buffers.combinedOutput());
+    }
+
+    private static CommandLine buildCommandLine(PrintWriter out, PrintWriter err) {
+        var wiring = new AppWiring();
+        var root = new RootCommand();
+        var cmd = new CommandLine(root).setOut(out).setErr(err);
+
+        injectContext(cmd, new CommandContext(out, wiring));
+        return cmd;
+    }
+
+    private static void injectContext(CommandLine cmd, CommandContext ctx) {
+        var status = cmd.getSubcommands().get("status").getCommand();
+        if (status instanceof StatusCommand sc) {
+            sc.setContext(ctx);
+        }
+    }
+
+    private record OutputBuffers(StringWriter outBuffer, StringWriter errBuffer) {
+
+        static OutputBuffers create() {
+            return new OutputBuffers(new StringWriter(), new StringWriter());
+        }
+
+        PrintWriter outWriter() {
+            return new PrintWriter(outBuffer);
+        }
+
+        PrintWriter errWriter() {
+            return new PrintWriter(errBuffer);
+        }
+
+        String combinedOutput() {
+            return outBuffer.toString() + errBuffer.toString();
+        }
     }
 
     public record RunResult(int exitCode, String output) {}
