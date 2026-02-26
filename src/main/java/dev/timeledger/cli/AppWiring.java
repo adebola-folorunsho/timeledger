@@ -12,8 +12,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 final class AppWiring {
-    private final InMemoryActiveSessionRepository activeSessions = new InMemoryActiveSessionRepository();
-    private final Clock clock;
+    private final dev.timeledger.tracking.port.ActiveSessionRepository activeSessions;    private final Clock clock;
     private final SqliteTimeEntryRepository timeEntries;
     private final DbPath dbPath;
 
@@ -32,6 +31,7 @@ final class AppWiring {
         Path dbFile = this.dbPath.dbFile();
         ensureParentDirectoryExists(dbFile);
         this.timeEntries = new SqliteTimeEntryRepository(dbFile);
+        this.activeSessions = new dev.timeledger.tracking.infra.sqlite.SqliteActiveSessionRepository(dbFile);
     }
 
     GetStatusUseCase statusUseCase() {
