@@ -8,16 +8,20 @@ final class ReportCommandTest {
 
     @Test
     void reportsTotalMinutesForAProject() {
-        var wiring = new AppWiring();
+        var clock = new TickingClock("2026-02-26T00:00:00Z");
+        var wiring = new AppWiring(clock);
 
         TimeledgerApp.runWith(wiring, "start", "project-alpha");
+        clock.advanceMinutes(60);
         TimeledgerApp.runWith(wiring, "stop");
 
         TimeledgerApp.runWith(wiring, "start", "project-alpha");
+        clock.advanceMinutes(30);
         TimeledgerApp.runWith(wiring, "stop");
 
         var report = TimeledgerApp.runWith(wiring, "report", "project-alpha");
 
         assertThat(report.exitCode()).isEqualTo(0);
-        assertThat(report.output()).contains("Total: 0m");    }
+        assertThat(report.output()).contains("Total: 90m");
+    }
 }
