@@ -10,4 +10,8 @@ final class TimeledgerPaths {
         String home = System.getProperty("user.home");
         return Path.of(home, ".timeledger", "timeledger.db");
     }
+
+    static DbPath defaultDbPath() {
+        return TimeledgerPaths::defaultDbFile;
+    }
 }

@@ -9,19 +9,27 @@ import dev.timeledger.tracking.port.Clock;
 import dev.timeledger.tracking.infra.sqlite.SqliteTimeEntryRepository;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 final class AppWiring {
     private final InMemoryActiveSessionRepository activeSessions = new InMemoryActiveSessionRepository();
     private final Clock clock;
     private final SqliteTimeEntryRepository timeEntries;
+    private final DbPath dbPath;
 
     public AppWiring() {
-        this(new dev.timeledger.tracking.infra.system.SystemClock());
+        this(new dev.timeledger.tracking.infra.system.SystemClock(), TimeledgerPaths.defaultDbPath());
     }
 
     public AppWiring(Clock clock) {
-        this.clock = java.util.Objects.requireNonNull(clock, "clock");
-        Path dbFile = TimeledgerPaths.defaultDbFile();
+        this(clock, TimeledgerPaths.defaultDbPath());
+    }
+
+    public AppWiring(Clock clock, DbPath dbPath) {
+        this.clock = Objects.requireNonNull(clock, "clock");
+        this.dbPath = Objects.requireNonNull(dbPath, "dbPath");
+
+        Path dbFile = this.dbPath.dbFile();
         ensureParentDirectoryExists(dbFile);
         this.timeEntries = new SqliteTimeEntryRepository(dbFile);
     }
